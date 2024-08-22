@@ -25,6 +25,15 @@ class WebSocket implements MessageComponentInterface
 
     function onError(ConnectionInterface $conn, \Exception $e)
     {
+        // Get a string representation of the data
+        $data_str = var_export($e, true);
+
+        // Write the data into the file
+        $file_path = __DIR__ . '/dump.txt';
+        file_put_contents($file_path, $data_str);
+
+        error_log($e->getMessage(), 3, __DIR__ . "/error.txt");
+
         $conn->close();
     }
 
